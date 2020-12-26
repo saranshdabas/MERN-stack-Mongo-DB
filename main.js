@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 //If DB is not there, it will be created
+//To use Atlas mongodb+srv://saransh:<password>@cluster0.chqmt.mongodb.net/<dbname>?retryWrites=true&w=majority
 mongoose.connect("mongodb://localhost:27017/organisation", {
   useNewUrlParser: true,
 });
