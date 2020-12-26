@@ -19,12 +19,26 @@ const employeeSchema = mongoose.Schema({
 const employeeModel = mongoose.model("Employee", employeeSchema);
 
 //An instance of model, ready to be saved
-var employee = new employeeModel({
-  name: "Saransh",
-  age: 23,
-  email: "sdjee2015@gmail.com",
-  salary: 1000,
-});
+var employees = [
+  new employeeModel({
+    name: "Saransh",
+    age: 23,
+    email: "sdjee2015@gmail.com",
+    salary: 1000,
+  }),
+  new employeeModel({
+    name: "Amey",
+    age: 22,
+    email: "amylokh@gmail.com",
+    salary: 1000,
+  }),
+  new employeeModel({
+    name: "Mayank",
+    age: 23,
+    email: "mayank@gmail.com",
+    salary: 1000,
+  }),
+];
 
 connection.on("connected", () =>
   console.log("Successfully Connected to MongoDB")
@@ -35,10 +49,38 @@ connection.on("disconnected", () =>
 connection.on("error", console.error.bind(console, "connection error:"));
 
 //Once the connection is opened, save the employee record(document)
+// connection.once("open", () => {
+//   employees.forEach((employee) => {
+//     employee.save((err, res) => {
+//       if (err) throw err;
+//       console.log("Save success", res);
+//     });
+//   });
+// });
+
+//CURD operations - model object helps us to interact with DB
 connection.once("open", () => {
-  employee.save((err, res) => {
+  //   employeeModel.find({}, (err, res) => {
+  //     if (err) throw err;
+  //     console.log(res);
+  //     connection.close();
+  //   });
+
+  employeeModel.find({ name: "Saransh" }, (err, res) => {
     if (err) throw err;
-    console.log("Save success", res);
+    console.log(res);
     connection.close();
   });
+
+  //   employeeModel.updateMany({ name: "Saransh" }, { age: 20 }, (err, res) => {
+  //     if (err) throw err;
+  //     console.log(res);
+  //     connection.close();
+  //   });
+
+  //   employeeModel.deleteOne({ name: "Saransh" }, (err, res) => {
+  //     if (err) throw err;
+  //     console.log(res);
+  //     connection.close();
+  //   });
 });
